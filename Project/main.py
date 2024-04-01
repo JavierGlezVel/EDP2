@@ -2,4 +2,4 @@
 def holamundo():
     """Hola mundo"""
     print("Hola Mundo!")
-    print("Hola Juanaa")
+    print("Hola Juana")
