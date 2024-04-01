@@ -6,3 +6,5 @@ def holamundo():
     print("gooood")
     a = 3 + 3
     print(a)
+
+holamundo()
