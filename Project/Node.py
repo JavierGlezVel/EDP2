@@ -18,5 +18,4 @@ class ReedBlackTree:
             return self.NIL
         if node.parent == node.parent.parent.left:
             return node.parent.parent.right
-        else:
-            return node.parent.parent.left
+        return node.parent.parent.left
