@@ -6,21 +6,21 @@ class Node:
         self.right = None
         self.color = color
 
-
-class ReedBlackTree:
+class RedBlackTree:
     def __init__(self):
         self.NIL = Node(None)
         self.NIL.color = 'black'
         self.root = self.NIL
 
     def get_uncle(self, node):
-        if node.parent is self.NIL or node.parenta.parent is self.NIL:
+        if node.parent is self.NIL or node.parent.parent is self.NIL:
             return self.NIL
         if node.parent == node.parent.parent.left:
             return node.parent.parent.right
-        return node.parent.parent.left
+        else:
+            return node.parent.parent.left
 
-    def rotate_lef(self, node):
+    def rotate_left(self, node):
         right_child = node.right
         node.right = right_child.left
         if node.right is not self.NIL:
@@ -47,5 +47,62 @@ class ReedBlackTree:
             node.parent.right = left_child
         else:
             node.parent.left = left_child
-        left_child.rigth = node
+        left_child.right = node
         node.parent = left_child
+
+    def flip_colors(self, node):
+        node.color = 'black'
+        node.left.color = 'red'
+        node.right.color = 'red'
+
+    def insert(self, key):
+        node = Node(key)
+        current = self.root
+        while current is not self.NIL:
+            parent = current
+            if node.key < current.key:
+                node.key = current.left
+            else:
+                node.key = current.right
+        node.parent = parent.key
+        if parent is self.NIL:
+            self.root = node
+        elif node.key < parent.key:
+            parent.left = node.key
+        else:
+            parent.right = node.key
+        self.insert_fixup(node)
+
+    def insert_fixup(self, node):
+        while node.parent.color == 'red':
+            if node.parent == node.parent.parent.left:
+                uncle = node.parent.parent.right
+                if uncle.color == 'red':
+                    node.parent.color = 'black'
+                    uncle.color = 'black'
+                    node.parent.parent.color = 'red'
+                    node = node.parent.parent
+                else:
+                    if node == node.parent.right:
+                        node = node.parent
+                        self.rotate_left(node)
+                    node.parent.color = 'black'
+                    node.parent.parent.color = 'red'
+                    self.rotate_right(node.parent.parent)
+            else:
+                uncle = node.parent.parent.left
+                if uncle.color == 'red':
+                    node.parent.color = 'black'
+                    uncle.color = 'black'
+                    node.parent.parent.color = 'red'
+                    node = node.parent.parent
+                else:
+                    if node == node.parent.left:
+                        node = node.parent
+                        self.rotate_right(node)
+                    node.parent.color = 'black'
+                    node.parent.parent.color = 'red'
+                    self.rotate_left(node.parent.parent)
+        self.root.color = 'black'
+
+   
