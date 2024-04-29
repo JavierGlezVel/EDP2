@@ -1,3 +1,4 @@
+from Node import *
 """Hola mundo"""
 def holamundo():
     """Hola mundo"""
@@ -8,4 +9,8 @@ def holamundo():
     print(a)
     print(a)
 
-holamundo()
+    holamundo()
+
+    prueba = RedBlackTree()
+    prueba.insert(43)
+    print(prueba)
